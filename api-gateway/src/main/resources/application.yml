@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: GATEWAY-SERVICE
+
+  cloud:
+    gateway:
+        discovery:
+            locator:
+                enabled: true
+        routes:
+          - id: payment-service
+            uri: lb://PAYMENT-SERVICE
+            predicates:
+              - Path=/payment/**
+          - id: user-service
+            uri: lb://USER-SERVICE
+            predicates:
+              - Path=/user/**
+
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: employeeModule
+#          uri: http://localhost:8081/
+#          predicates:
+#            - Path=/employee/**
+#        - id: consumerModule
+#          uri: http://localhost:8082/
+#          predicates:
+#            - Path=/consumer/**
+
+server:
+  port: 8989
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
